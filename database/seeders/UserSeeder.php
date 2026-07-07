@@ -15,14 +15,19 @@ class UserSeeder extends Seeder
     {
         $users = [
             [
-                'name' => 'Tamus Tahir',
-                'email' => 'tamus@gmail.com',
-                'role' => 'Superadmin',
+                'name' => 'Admin Utama',
+                'email' => 'admin@gmail.com',
+                'role' => 'admin',
             ],
             [
-                'name' => 'Joh Doe',
-                'email' => 'admin@gmail.com',
-                'role' => 'Admin',
+                'name' => 'Sensei Yamada',
+                'email' => 'instructor@gmail.com',
+                'role' => 'instructor',
+            ],
+            [
+                'name' => 'Siswa Teladan',
+                'email' => 'student@gmail.com',
+                'role' => 'student',
             ],
         ];
 
