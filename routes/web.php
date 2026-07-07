@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SettingController;
@@ -24,8 +26,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/edit', [DashboardController::class, 'edit'])->name('dashboard.edit');
     Route::put('/dashboard/update', [DashboardController::class, 'update'])->name('dashboard.update');
 
-    Route::resource('/user', UserController::class)->middleware('role:Superadmin');
+    // User Management - hanya admin
+    Route::resource('/user', UserController::class)->middleware('role:admin');
+
+    // Category Management - hanya admin
+    Route::resource('/category', CategoryController::class)->middleware('role:admin');
+
+    // Course Management - admin dan instructor
+    Route::resource('/course', CourseController::class)->middleware('role:admin,instructor');
 
     Route::get('/setting', [SettingController::class, 'index'])->name('setting.index');
     Route::put('/setting/{setting}/update', [SettingController::class, 'update'])->name('setting.update');
 });
+

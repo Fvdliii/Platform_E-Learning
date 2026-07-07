@@ -284,7 +284,7 @@
                 </a>
             </li>
 
-            @if (Auth::user()->role == 'Superadmin')
+            @if (Auth::user()->role == 'admin')
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('user.*') ? '' : 'collapsed' }}"
                         href="{{ route('user.index') }}">
@@ -292,8 +292,24 @@
                         <span>User</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('category.*') ? '' : 'collapsed' }}"
+                        href="{{ route('category.index') }}">
+                        <i class='bx bx-category'></i>
+                        <span>Kategori</span>
+                    </a>
+                </li>
             @endif
 
+            @if (Auth::user()->role == 'admin' || Auth::user()->role == 'instructor')
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('course.*') ? '' : 'collapsed' }}"
+                        href="{{ route('course.index') }}">
+                        <i class='bx bx-book-open'></i>
+                        <span>Kursus</span>
+                    </a>
+                </li>
+            @endif
 
         </ul>
 
