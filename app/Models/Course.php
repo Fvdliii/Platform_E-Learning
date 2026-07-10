@@ -50,4 +50,12 @@ class Course extends Model
     {
         return $this->hasMany(Quiz::class);
     }
+
+    /**
+     * A course has many enrollments.
+     */
+    public function enrollments()
+    {
+        return $this->hasMany(Enrollment::class);
+    }
 }

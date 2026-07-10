@@ -25,4 +25,12 @@ class Lesson extends Model
     {
         return $this->belongsTo(Course::class);
     }
+
+    /**
+     * A lesson has many progress records.
+     */
+    public function progressRecords()
+    {
+        return $this->hasMany(Progress::class);
+    }
 }

@@ -29,4 +29,20 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * A user (student) has many enrollments.
+     */
+    public function enrollments()
+    {
+        return $this->hasMany(Enrollment::class);
+    }
+
+    /**
+     * A user (student) has many progress records.
+     */
+    public function progressRecords()
+    {
+        return $this->hasMany(Progress::class);
+    }
 }

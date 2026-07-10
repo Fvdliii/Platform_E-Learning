@@ -46,6 +46,14 @@ Route::middleware('auth')->group(function () {
         ->only(['create', 'store', 'edit', 'update', 'destroy'])
         ->middleware('role:admin,instructor');
 
+    // Enrollment Management - student
+    Route::get('/my-courses', [App\Http\Controllers\EnrollmentController::class, 'index'])->name('enrollment.index')->middleware('role:student');
+    Route::post('/enroll', [App\Http\Controllers\EnrollmentController::class, 'store'])->name('enrollment.store')->middleware('role:student');
+    Route::delete('/enroll/{enrollment}', [App\Http\Controllers\EnrollmentController::class, 'destroy'])->name('enrollment.destroy')->middleware('role:student');
+
+    // Progress Management - student
+    Route::post('/progress', [App\Http\Controllers\ProgressController::class, 'store'])->name('progress.store')->middleware('role:student');
+
     Route::get('/setting', [SettingController::class, 'index'])->name('setting.index');
     Route::put('/setting/{setting}/update', [SettingController::class, 'update'])->name('setting.update');
 });
