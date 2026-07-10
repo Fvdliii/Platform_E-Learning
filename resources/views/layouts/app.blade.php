@@ -10,7 +10,7 @@
     <title>{{ $setting->app_name }} | {{ $title }}</title>
     <meta content="{{ $setting->description }}" name="description">
     <meta content="{{ $setting->keywords }}" name="keywords">
-    <meta content="Tamus Tahir" name="author">
+    <meta content="Fadli" name="author">
 
     <!-- Favicons -->
     <link href="{{ $setting->logo ? asset('storage/' . $setting->logo) : asset('niceadmin/img/laravel.png') }}"
@@ -314,6 +314,13 @@
                         href="{{ route('lesson.index') }}">
                         <i class='bx bx-file'></i>
                         <span>Materi</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('quiz.*') || request()->routeIs('question.*') ? '' : 'collapsed' }}"
+                        href="{{ route('quiz.index') }}">
+                        <i class='bx bx-question-mark'></i>
+                        <span>Kuis</span>
                     </a>
                 </li>
             @endif

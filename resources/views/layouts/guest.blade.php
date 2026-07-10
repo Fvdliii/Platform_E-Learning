@@ -8,7 +8,7 @@
     <title>{{ $setting->app_name }} | {{ $title }}</title>
     <meta content="{{ $setting->description }}" name="description">
     <meta content="{{ $setting->keywords }}" name="keywords">
-    <meta content="Tamus Tahir" name="author">
+    <meta content="Fadli" name="author">
 
     <!-- Favicons -->
     <link href="{{ $setting->logo ? asset('storage/' . $setting->logo) : asset('niceadmin/img/laravel.png') }}"

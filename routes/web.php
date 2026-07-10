@@ -38,6 +38,14 @@ Route::middleware('auth')->group(function () {
     // Lesson Management - admin dan instructor
     Route::resource('/lesson', App\Http\Controllers\LessonController::class)->middleware('role:admin,instructor');
 
+    // Quiz Management - admin dan instructor
+    Route::resource('/quiz', App\Http\Controllers\QuizController::class)->middleware('role:admin,instructor');
+
+    // Question Management - admin dan instructor (nested under quiz context)
+    Route::resource('/question', App\Http\Controllers\QuestionController::class)
+        ->only(['create', 'store', 'edit', 'update', 'destroy'])
+        ->middleware('role:admin,instructor');
+
     Route::get('/setting', [SettingController::class, 'index'])->name('setting.index');
     Route::put('/setting/{setting}/update', [SettingController::class, 'update'])->name('setting.update');
 });
