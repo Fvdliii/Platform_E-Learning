@@ -35,6 +35,9 @@ Route::middleware('auth')->group(function () {
     // Course Management - admin dan instructor
     Route::resource('/course', CourseController::class)->middleware('role:admin,instructor');
 
+    // Lesson Management - admin dan instructor
+    Route::resource('/lesson', App\Http\Controllers\LessonController::class)->middleware('role:admin,instructor');
+
     Route::get('/setting', [SettingController::class, 'index'])->name('setting.index');
     Route::put('/setting/{setting}/update', [SettingController::class, 'update'])->name('setting.update');
 });

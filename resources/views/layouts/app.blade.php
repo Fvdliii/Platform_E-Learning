@@ -309,6 +309,13 @@
                         <span>Kursus</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('lesson.*') ? '' : 'collapsed' }}"
+                        href="{{ route('lesson.index') }}">
+                        <i class='bx bx-file'></i>
+                        <span>Materi</span>
+                    </a>
+                </li>
             @endif
 
         </ul>

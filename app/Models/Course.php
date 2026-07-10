@@ -34,4 +34,12 @@ class Course extends Model
     {
         return $this->belongsTo(User::class, 'instructor_id');
     }
+
+    /**
+     * A course has many lessons.
+     */
+    public function lessons()
+    {
+        return $this->hasMany(Lesson::class);
+    }
 }
