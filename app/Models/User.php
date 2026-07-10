@@ -45,4 +45,20 @@ class User extends Authenticatable
     {
         return $this->hasMany(Progress::class);
     }
+
+    /**
+     * A user (student) has many reviews.
+     */
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    /**
+     * A user (student) has many certificates.
+     */
+    public function certificates()
+    {
+        return $this->hasMany(Certificate::class);
+    }
 }

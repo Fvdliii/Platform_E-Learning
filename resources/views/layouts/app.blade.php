@@ -325,6 +325,24 @@
                 </li>
             @endif
 
+            @if (Auth::user()->role == 'student')
+                <li class="nav-heading">Siswa</li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('enrollment.*') ? '' : 'collapsed' }}"
+                        href="{{ route('enrollment.index') }}">
+                        <i class='bx bx-book-reader'></i>
+                        <span>Kursus Saya</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('certificate.*') ? '' : 'collapsed' }}"
+                        href="{{ route('certificate.index') }}">
+                        <i class='bx bx-award'></i>
+                        <span>Sertifikat Saya</span>
+                    </a>
+                </li>
+            @endif
+
         </ul>
 
     </aside><!-- End Sidebar-->

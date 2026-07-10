@@ -58,4 +58,20 @@ class Course extends Model
     {
         return $this->hasMany(Enrollment::class);
     }
+
+    /**
+     * A course has many reviews.
+     */
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    /**
+     * A course has many certificates.
+     */
+    public function certificates()
+    {
+        return $this->hasMany(Certificate::class);
+    }
 }

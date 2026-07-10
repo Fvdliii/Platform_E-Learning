@@ -54,6 +54,13 @@ Route::middleware('auth')->group(function () {
     // Progress Management - student
     Route::post('/progress', [App\Http\Controllers\ProgressController::class, 'store'])->name('progress.store')->middleware('role:student');
 
+    // Review Management - student
+    Route::post('/review', [App\Http\Controllers\ReviewController::class, 'store'])->name('review.store')->middleware('role:student');
+
+    // Certificate Management - student
+    Route::get('/certificates', [App\Http\Controllers\CertificateController::class, 'index'])->name('certificate.index')->middleware('role:student');
+    Route::get('/certificates/{certificate}', [App\Http\Controllers\CertificateController::class, 'show'])->name('certificate.show')->middleware('role:student');
+
     Route::get('/setting', [SettingController::class, 'index'])->name('setting.index');
     Route::put('/setting/{setting}/update', [SettingController::class, 'update'])->name('setting.update');
 });
