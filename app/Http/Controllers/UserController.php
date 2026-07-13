@@ -16,7 +16,9 @@ class UserController extends Controller
     {
         return view('user.index', [
             'title' => 'User',
-            'users' => User::latest()->get(),
+            'users' => User::orderByRaw("CASE WHEN role = 'admin' THEN 1 WHEN role = 'instructor' THEN 2 WHEN role = 'student' THEN 3 ELSE 4 END")
+                           ->latest()
+                           ->get(),
         ]);
     }
 

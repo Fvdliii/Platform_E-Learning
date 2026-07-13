@@ -40,11 +40,11 @@
     <style>
         :root {
             /* ====== UBAH WARNA TEMA DI SINI ====== */
-            --theme-bg: #000080;
-            --theme-hover: #020260;
+            --theme-bg: #991b1b; /* Darker Elegant Red */
+            --theme-hover: #7f1d1d;
             /* warna lebih gelap untuk efek hover */
             --theme-text: #ffffff;
-            --main-bg: #eeeeee;
+            --main-bg: #fdf2f2;
             /* warna background utama / halaman */
             /* ===================================== */
         }
@@ -131,20 +131,7 @@
             margin-bottom: 0;
         }
 
-        /* === Tampilan Tombol btn-primary === */
-        .btn-primary {
-            background-color: var(--theme-bg) !important;
-            border-color: var(--theme-bg) !important;
-            color: var(--theme-text) !important;
-        }
 
-        .btn-primary:hover,
-        .btn-primary:focus,
-        .btn-primary:active {
-            background-color: var(--theme-hover) !important;
-            border-color: var(--theme-hover) !important;
-            color: var(--theme-text) !important;
-        }
 
         /* === Tampilan Sidebar (Hover & Active) === */
         .sidebar-nav .nav-link:hover,
@@ -185,7 +172,7 @@
         <div class="d-flex align-items-center justify-content-between">
             <a href="{{ route('dashboard.index') }}" class="logo d-flex align-items-center">
                 <img src="{{ $setting->logo ? asset('storage/' . $setting->logo) : asset('niceadmin/img/laravel.png') }}"
-                    alt="">
+                    alt="" class="rounded" style="background: white; padding: 2px;">
                 <span class="d-none d-lg-block">{{ $setting->app_name }}</span>
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -194,9 +181,9 @@
         <form id="switch-user-form" action="{{ route('login.switch_user') }}" method="POST" class="w-100 mx-2">
             @csrf
             <select name="user_id" class="form-control select2-default" id="switch-user-select">
-                @foreach (\App\Models\User::all() as $u)
+                @foreach (\App\Models\User::orderByRaw("CASE WHEN role = 'admin' THEN 1 WHEN role = 'instructor' THEN 2 WHEN role = 'student' THEN 3 ELSE 4 END")->get() as $u)
                     <option value="{{ $u->id }}" {{ Auth::id() == $u->id ? 'selected' : '' }}>
-                        {{ $u->name }} ({{ $u->role }})
+                        {{ $u->name }} ({{ ucfirst($u->role) }})
                     </option>
                 @endforeach
             </select>

@@ -104,8 +104,18 @@ class StudentQuizController extends Controller
             ]);
         }
 
+        $isGenerated = false;
+        if ($passed) {
+            $isGenerated = \App\Models\Certificate::checkAndGenerate($user->id, $quiz->course_id);
+        }
+
+        $msg = 'Kuis selesai! Berikut adalah hasil Anda.';
+        if ($isGenerated) {
+            $msg .= ' Selamat! Anda telah menyelesaikan seluruh syarat dan mendapatkan Sertifikat Kelulusan!';
+        }
+
         return redirect()->route('student.quiz.result', $attempt)
-            ->withSuccess('Kuis selesai! Berikut adalah hasil Anda.');
+            ->withSuccess($msg);
     }
 
     /**

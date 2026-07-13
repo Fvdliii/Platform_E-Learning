@@ -26,12 +26,12 @@
                     },
                     colors: {
                         brand: {
-                            50: '#eff6ff',
-                            100: '#dbeafe',
-                            500: '#3b82f6',
-                            600: '#2563eb', // Matches the modern blue theme
-                            700: '#1d4ed8',
-                            900: '#1e3a8a',
+                            50: '#fef2f2',
+                            100: '#fee2e2',
+                            500: '#dc2626',
+                            600: '#b91c1c', // Darker elegant red
+                            700: '#991b1b',
+                            900: '#450a0a',
                         }
                     }
                 }
@@ -51,9 +51,9 @@
     <div class="min-h-screen flex">
         <!-- Left Side: Visual / Branding (Hidden on mobile) -->
         <div class="hidden lg:flex lg:w-1/2 relative bg-brand-900 overflow-hidden items-center justify-center">
-            <!-- Abstract Background Image -->
-            <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop"
-                class="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-overlay" alt="Background">
+            <!-- Japanese Background Image -->
+            <img src="https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?q=80&w=2000&auto=format&fit=crop"
+                class="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-overlay" alt="Background">
 
             <!-- Gradient Overlay -->
             <div class="absolute inset-0 bg-gradient-to-br from-brand-600/80 to-brand-900/90"></div>
@@ -62,7 +62,7 @@
             <div class="relative z-10 p-12 text-center text-white max-w-lg">
                 <div class="mb-8 flex justify-center">
                     @if ($setting->logo)
-                        <img src="{{ asset('storage/' . $setting->logo) }}" alt="Logo" class="h-24 drop-shadow-2xl">
+                        <img src="{{ asset('storage/' . $setting->logo) }}" alt="Logo" class="h-24 bg-white p-2 rounded-2xl drop-shadow-2xl">
                     @else
                         <div
                             class="w-24 h-24 bg-white rounded-3xl flex items-center justify-center text-brand-600 font-bold text-4xl shadow-2xl">
@@ -84,7 +84,7 @@
             <!-- Mobile Logo (Visible only on small screens) -->
             <div class="absolute top-8 left-8 lg:hidden flex items-center gap-3">
                 @if ($setting->logo)
-                    <img src="{{ asset('storage/' . $setting->logo) }}" alt="Logo" class="h-8">
+                    <img src="{{ asset('storage/' . $setting->logo) }}" alt="Logo" class="h-10 bg-white p-1 rounded-lg shadow-sm">
                 @else
                     <div
                         class="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center text-white font-bold text-sm">

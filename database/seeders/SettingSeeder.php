@@ -14,11 +14,11 @@ class SettingSeeder extends Seeder
     public function run(): void
     {
         Setting::create([
-            'app_name' => 'NiceAdmin Laravel',
+            'app_name' => 'Nihongo Gakuen',
             'copyright' => 'Fadli 2026',
-            'login_title' => 'Halaman Login',
-            'keywords' => 'admin, dashboard, laravel, niceadmin, bootstrap',
-            'description' => 'Aplikasi dashboard admin menggunakan Laravel dan NiceAdmin template.',
+            'login_title' => 'Portal Login Siswa & Instruktur',
+            'keywords' => 'japanese, belajar bahasa jepang, e-learning jepang, jlpt, nihongo',
+            'description' => 'Platform e-learning interaktif untuk menguasai bahasa Jepang dengan mudah dan menyenangkan.',
         ]);
     }
 }
