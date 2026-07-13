@@ -29,20 +29,12 @@ class ProgressController extends Controller
             return back()->withError('Anda sudah menyelesaikan materi ini sebelumnya.');
         }
 
-        $progress = Progress::create([
+        Progress::create([
             'user_id'      => $user->id,
             'lesson_id'    => $validate['lesson_id'],
             'completed_at' => now(),
         ]);
 
-        $lesson = \App\Models\Lesson::find($validate['lesson_id']);
-        $isGenerated = \App\Models\Certificate::checkAndGenerate($user->id, $lesson->course_id);
-
-        $msg = 'Selamat! Anda telah menyelesaikan materi ini.';
-        if ($isGenerated) {
-            $msg .= ' Dan Anda telah mendapatkan Sertifikat Kelulusan Kursus!';
-        }
-
-        return back()->withSuccess($msg);
+        return back()->withSuccess('Selamat! Anda telah menyelesaikan materi ini.');
     }
 }
