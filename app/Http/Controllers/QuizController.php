@@ -86,9 +86,16 @@ class QuizController extends Controller
 
         $quiz->load('questions.answers');
 
+        // Load attempts with student data for the recap panel
+        $attempts = \App\Models\QuizAttempt::with('user')
+            ->where('quiz_id', $quiz->id)
+            ->latest()
+            ->get();
+
         return view('quiz.show', [
-            'title' => 'Detail Kuis: ' . $quiz->title,
-            'quiz'  => $quiz,
+            'title'    => 'Detail Kuis: ' . $quiz->title,
+            'quiz'     => $quiz,
+            'attempts' => $attempts,
         ]);
     }
 

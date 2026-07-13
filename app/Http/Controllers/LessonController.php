@@ -103,16 +103,36 @@ class LessonController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Lesson $lesson)
+    public function show(Request $request, Lesson $lesson)
     {
         $user = Auth::user();
 
+        // Admin dan instructor pengecekan akses
         if ($user->role === 'instructor' && $lesson->course->instructor_id !== $user->id) {
-            abort(403);
+            abort(403, 'Akses ditolak.');
+        }
+
+        // Student pengecekan pendaftaran
+        if ($user->role === 'student') {
+            $isEnrolled = \App\Models\Enrollment::where('user_id', $user->id)
+                ->where('course_id', $lesson->course_id)
+                ->exists();
+            
+            if (!$isEnrolled) {
+                return redirect()->route('course.show', $lesson->course)
+                    ->withError('Anda harus mendaftar ke kursus ini untuk melihat materi.');
+            }
+        }
+
+        // Jika request dari modal admin/instruktur (?modal=1), kembalikan partial view
+        if ($request->has('modal')) {
+            return view('lesson._detail', [
+                'lesson' => $lesson,
+            ]);
         }
 
         return view('lesson.show', [
-            'title'  => 'Detail Materi Pelajaran',
+            'title'  => 'Materi: ' . $lesson->title,
             'lesson' => $lesson->load('course'),
         ]);
     }

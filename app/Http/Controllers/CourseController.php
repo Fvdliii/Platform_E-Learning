@@ -93,11 +93,21 @@ class CourseController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Course $course)
+    public function show(Request $request, Course $course)
     {
+        $course->load(['category', 'instructor', 'lessons']);
+
+        // Jika request dari modal admin/instruktur (?modal=1), kembalikan partial view
+        if ($request->has('modal')) {
+            return view('course._detail', [
+                'course' => $course,
+            ]);
+        }
+
+        // Halaman penuh untuk student dan direct access
         return view('course.show', [
-            'title'  => 'Detail Kursus',
-            'course' => $course->load(['category', 'instructor']),
+            'title'  => 'Detail Kursus: ' . $course->title,
+            'course' => $course,
         ]);
     }
 

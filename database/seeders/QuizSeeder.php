@@ -15,27 +15,44 @@ class QuizSeeder extends Seeder
     {
         $courses = Course::where('status', 'published')->get();
 
+        $questionsPool = [
+            'Apa arti dari "Watashi"?',
+            'Bagaimana cara mengucapkan "Terima kasih" dalam bahasa Jepang?',
+            'Partikel apa yang menunjukkan subjek kalimat?',
+            'Apa arti "Gakusei"?',
+            'Sebutkan sapaan selamat pagi dalam bahasa Jepang!',
+        ];
+
+        $answersPool = [
+            ['Saya', 'Kamu', 'Dia', 'Mereka'],
+            ['Arigatou', 'Sumimasen', 'Ohayou', 'Sayounara'],
+            ['wa', 'o', 'ni', 'de'],
+            ['Siswa', 'Guru', 'Dokter', 'Pegawai'],
+            ['Ohayou gozaimasu', 'Konnichiwa', 'Konbanwa', 'Oyasuminasai'],
+        ];
+
         foreach ($courses as $course) {
             $quiz = Quiz::create([
                 'course_id'     => $course->id,
                 'title'         => 'Kuis Evaluasi: ' . $course->title,
-                'description'   => 'Kuis ini dirancang untuk menguji pemahaman Anda setelah menyelesaikan materi kursus.',
+                'description'   => 'Kuis ini dirancang untuk menguji pemahaman Anda setelah menyelesaikan materi.',
                 'passing_score' => 70,
             ]);
 
-            // Tambahkan minimal 5 pertanyaan untuk kuis ini
-            for ($i = 1; $i <= 5; $i++) {
+            for ($i = 0; $i < 5; $i++) {
                 $question = $quiz->questions()->create([
-                    'text' => "Pertanyaan contoh {$i} untuk modul " . $course->title . "?",
+                    'text' => $questionsPool[$i],
                 ]);
 
-                // Buat 4 jawaban per pertanyaan, acak jawaban benarnya
-                $correctIndex = rand(1, 4);
-                
-                for ($j = 1; $j <= 4; $j++) {
+                // Pilihan pertama dianggap benar untuk disederhanakan, lalu kita acak saat insert
+                $answers = $answersPool[$i];
+                $correctAnswerText = $answers[0];
+                shuffle($answers);
+
+                foreach ($answers as $ans) {
                     $question->answers()->create([
-                        'text'       => "Opsi Jawaban {$j}",
-                        'is_correct' => ($j === $correctIndex),
+                        'text'       => $ans,
+                        'is_correct' => ($ans === $correctAnswerText),
                     ]);
                 }
             }

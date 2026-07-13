@@ -107,26 +107,30 @@
         </div>
         <div class="card-body">
             <div class="row g-3 mt-2">
-                <div class="col-md-3">
-                    <a href="{{ route('user.index') }}" class="text-decoration-none">
-                        <div class="card border border-primary border-opacity-25 h-100 hover-shadow">
-                            <div class="card-body text-center mt-4">
-                                <i class='bx bx-user-plus fs-1 text-primary mb-2'></i>
-                                <h6 class="mb-0">Manage Users</h6>
+                @if(Auth::user()->role === 'admin')
+                    <div class="col-md-3">
+                        <a href="{{ route('user.index') }}" class="text-decoration-none">
+                            <div class="card border border-primary border-opacity-25 h-100 hover-shadow">
+                                <div class="card-body text-center mt-4">
+                                    <i class='bx bx-user-plus fs-1 text-primary mb-2'></i>
+                                    <h6 class="mb-0">Manage Users</h6>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-3">
-                    <a href="{{ route('setting.index') }}" class="text-decoration-none">
-                        <div class="card border border-success border-opacity-25 h-100 hover-shadow">
-                            <div class="card-body text-center mt-4"">
-                                <i class='bx bx-cog fs-1 text-success mb-2'></i>
-                                <h6 class=" mb-0">Settings</h6>
+                        </a>
+                    </div>
+                @endif
+                @if(Auth::user()->role === 'admin')
+                    <div class="col-md-3">
+                        <a href="{{ route('setting.index') }}" class="text-decoration-none">
+                            <div class="card border border-success border-opacity-25 h-100 hover-shadow">
+                                <div class="card-body text-center mt-4">
+                                    <i class='bx bx-cog fs-1 text-success mb-2'></i>
+                                    <h6 class="mb-0">Settings</h6>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                </div>
+                        </a>
+                    </div>
+                @endif
                 <div class="col-md-3">
                     <a href="{{ route('dashboard.show') }}" class="text-decoration-none">
                         <div class="card border border-info border-opacity-25 h-100 hover-shadow">

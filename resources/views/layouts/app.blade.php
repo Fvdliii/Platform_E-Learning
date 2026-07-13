@@ -276,15 +276,15 @@
                 </a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('setting.*') ? '' : 'collapsed' }}"
-                    href="{{ route('setting.index') }}">
-                    <i class='bx bx-cog'></i>
-                    <span>Setting</span>
-                </a>
-            </li>
 
             @if (Auth::user()->role == 'admin')
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('setting.*') ? '' : 'collapsed' }}"
+                        href="{{ route('setting.index') }}">
+                        <i class='bx bx-cog'></i>
+                        <span>Setting</span>
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('user.*') ? '' : 'collapsed' }}"
                         href="{{ route('user.index') }}">
@@ -321,6 +321,13 @@
                         href="{{ route('quiz.index') }}">
                         <i class='bx bx-question-mark'></i>
                         <span>Kuis</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('certificate.manage') ? '' : 'collapsed' }}"
+                        href="{{ route('certificate.manage') }}">
+                        <i class='bx bx-certification'></i>
+                        <span>Kelola Sertifikat</span>
                     </a>
                 </li>
             @endif

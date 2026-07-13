@@ -23,25 +23,25 @@ class LessonSeeder extends Seeder
         $lessons = [
             [
                 'course_id' => $course->id,
-                'title'     => '1. Pengenalan Hiragana',
-                'content'   => 'Materi ini membahas huruf-huruf dasar Hiragana, cara penulisan, dan pelafalan.',
+                'title'     => '1. Kosakata (Kotoba) Bab 1',
+                'content'   => 'Mempelajari kosakata dasar seperti Watashi, Anata, Ano hito, -san, -jin, dll.',
                 'type'      => 'text',
                 'order'     => 1,
             ],
             [
                 'course_id' => $course->id,
-                'title'     => '2. Video Panduan Pelafalan',
-                'content'   => 'Simak video ini untuk mengetahui cara melafalkan kata-kata dasar.',
+                'title'     => '2. Penjelasan Tata Bahasa (Bunpou)',
+                'content'   => 'Simak video ini untuk memahami pola kalimat N1 wa N2 desu, dan N1 wa N2 ja arimasen.',
                 'type'      => 'video',
                 'file_path' => 'https://www.youtube.com/embed/dQw4w9WgXcQ', // Dummy video link
                 'order'     => 2,
             ],
             [
                 'course_id' => $course->id,
-                'title'     => '3. Unduh Tabel Hiragana',
-                'content'   => 'Gunakan tabel PDF ini sebagai referensi cepat.',
+                'title'     => '3. Pola Kalimat (Bukei) & Contoh Kalimat (Reibun)',
+                'content'   => 'Gunakan referensi PDF ini untuk membaca contoh-contoh kalimat Bab 1.',
                 'type'      => 'pdf',
-                'file_path' => 'dummy/hiragana.pdf',
+                'file_path' => 'dummy/minna-b1.pdf',
                 'order'     => 3,
             ],
         ];

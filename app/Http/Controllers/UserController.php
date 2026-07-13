@@ -83,10 +83,24 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return view('user.show', [
+        $data = [
             'title' => 'Detail User',
             'user' => $user,
-        ]);
+        ];
+
+        // If user is a student, we can pass their enrollments and available courses
+        if ($user->role === 'student') {
+            $enrollments = \App\Models\Enrollment::with('course')->where('user_id', $user->id)->get();
+            $enrolledCourseIds = $enrollments->pluck('course_id');
+            
+            // Available courses that the student hasn't enrolled in
+            $availableCourses = \App\Models\Course::whereNotIn('id', $enrolledCourseIds)->get();
+
+            $data['enrollments'] = $enrollments;
+            $data['availableCourses'] = $availableCourses;
+        }
+
+        return view('user.show', $data);
     }
 
     /**

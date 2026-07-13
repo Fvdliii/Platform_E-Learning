@@ -32,14 +32,34 @@ Route::middleware('auth')->group(function () {
     // Category Management - hanya admin
     Route::resource('/category', CategoryController::class)->middleware('role:admin');
 
-    // Course Management - admin dan instructor
-    Route::resource('/course', CourseController::class)->middleware('role:admin,instructor');
+    // Course Management - admin dan instructor (kecuali show)
+    Route::resource('/course', CourseController::class)
+        ->except(['show'])
+        ->middleware('role:admin,instructor');
 
-    // Lesson Management - admin dan instructor
-    Route::resource('/lesson', App\Http\Controllers\LessonController::class)->middleware('role:admin,instructor');
+    // Course show - semua user (admin, instructor, student) bisa melihat detail kursus
+    Route::get('/course/{course}', [CourseController::class, 'show'])->name('course.show');
+
+    // Lesson Management - admin dan instructor (kecuali show)
+    Route::resource('/lesson', App\Http\Controllers\LessonController::class)
+        ->except(['show'])
+        ->middleware('role:admin,instructor');
+
+    // Lesson show - semua user bisa melihat detail materi (pengecekan pendaftaran bisa dilakukan di controller)
+    Route::get('/lesson/{lesson}', [App\Http\Controllers\LessonController::class, 'show'])->name('lesson.show');
+
+    // Quiz untuk student (mengerjakan kuis)
+    Route::get('/quiz/{quiz}/take', [App\Http\Controllers\StudentQuizController::class, 'show'])->name('student.quiz.show')->middleware('role:student');
+    Route::post('/quiz/{quiz}/submit', [App\Http\Controllers\StudentQuizController::class, 'submit'])->name('student.quiz.submit')->middleware('role:student');
+    Route::get('/quiz/result/{attempt}', [App\Http\Controllers\StudentQuizController::class, 'result'])->name('student.quiz.result')->middleware('role:student');
 
     // Quiz Management - admin dan instructor
     Route::resource('/quiz', App\Http\Controllers\QuizController::class)->middleware('role:admin,instructor');
+
+    // Quiz Attempt Management - admin dan instructor
+    Route::post('/quiz-attempt/{attempt}/note', [App\Http\Controllers\QuizAttemptController::class, 'addNote'])->name('quiz.attempt.note')->middleware('role:admin,instructor');
+    Route::delete('/quiz-attempt/{attempt}/reset', [App\Http\Controllers\QuizAttemptController::class, 'reset'])->name('quiz.attempt.reset')->middleware('role:admin,instructor');
+    Route::get('/quiz-attempt/{attempt}/answers', [App\Http\Controllers\QuizAttemptController::class, 'answers'])->name('quiz.attempt.answers')->middleware('role:admin,instructor');
 
     // Question Management - admin dan instructor (nested under quiz context)
     Route::resource('/question', App\Http\Controllers\QuestionController::class)
@@ -51,6 +71,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/enroll', [App\Http\Controllers\EnrollmentController::class, 'store'])->name('enrollment.store')->middleware('role:student');
     Route::delete('/enroll/{enrollment}', [App\Http\Controllers\EnrollmentController::class, 'destroy'])->name('enrollment.destroy')->middleware('role:student');
 
+    // Enrollment Management - admin & instructor (kelola siswa di kursus)
+    Route::get('/course/{course}/students', [App\Http\Controllers\EnrollmentController::class, 'manage'])->name('enrollment.manage')->middleware('role:admin,instructor');
+    Route::post('/enroll/admin', [App\Http\Controllers\EnrollmentController::class, 'adminStore'])->name('enrollment.admin.store')->middleware('role:admin,instructor');
+    Route::delete('/enroll/admin/{enrollment}', [App\Http\Controllers\EnrollmentController::class, 'adminDestroy'])->name('enrollment.admin.destroy')->middleware('role:admin,instructor');
+
     // Progress Management - student
     Route::post('/progress', [App\Http\Controllers\ProgressController::class, 'store'])->name('progress.store')->middleware('role:student');
 
@@ -59,9 +84,15 @@ Route::middleware('auth')->group(function () {
 
     // Certificate Management - student
     Route::get('/certificates', [App\Http\Controllers\CertificateController::class, 'index'])->name('certificate.index')->middleware('role:student');
-    Route::get('/certificates/{certificate}', [App\Http\Controllers\CertificateController::class, 'show'])->name('certificate.show')->middleware('role:student');
+    Route::get('/certificates/{certificate}', [App\Http\Controllers\CertificateController::class, 'show'])->name('certificate.show')->middleware('role:student,admin,instructor');
 
-    Route::get('/setting', [SettingController::class, 'index'])->name('setting.index');
-    Route::put('/setting/{setting}/update', [SettingController::class, 'update'])->name('setting.update');
+    // Certificate Management - admin & instructor
+    Route::get('/certificate/manage', [App\Http\Controllers\CertificateController::class, 'manage'])->name('certificate.manage')->middleware('role:admin,instructor');
+    Route::post('/certificate', [App\Http\Controllers\CertificateController::class, 'store'])->name('certificate.store')->middleware('role:admin,instructor');
+    Route::delete('/certificate/{certificate}', [App\Http\Controllers\CertificateController::class, 'destroy'])->name('certificate.destroy')->middleware('role:admin,instructor');
+
+    // Setting Management - admin only
+    Route::get('/setting', [SettingController::class, 'index'])->name('setting.index')->middleware('role:admin');
+    Route::put('/setting/{setting}/update', [SettingController::class, 'update'])->name('setting.update')->middleware('role:admin');
 });
 

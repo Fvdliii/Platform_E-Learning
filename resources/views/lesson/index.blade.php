@@ -92,7 +92,7 @@
                     }
                 });
 
-                $('#modal-detail').load($(this).data('route'), function(response, status, xhr) {
+                $('#modal-detail').load($(this).data('route') + '?modal=1', function(response, status, xhr) {
                     if (status == "success") {
                         setTimeout(() => {
                             Swal.close();

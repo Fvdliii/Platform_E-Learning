@@ -22,6 +22,12 @@ class QuestionController extends Controller
             abort(403);
         }
 
+        // Batasi maksimal 10 soal per kuis
+        if ($quiz->questions()->count() >= 10) {
+            return redirect()->route('quiz.show', $quiz)
+                ->withError('Kuis ini sudah memiliki 10 soal (batas maksimum). Hapus soal yang ada jika ingin menggantinya.');
+        }
+
         return view('question.create', [
             'title' => 'Tambah Pertanyaan',
             'quiz'  => $quiz,
@@ -38,6 +44,12 @@ class QuestionController extends Controller
 
         if ($user->role === 'instructor' && $quiz->course->instructor_id !== $user->id) {
             return back()->withError('Anda tidak memiliki akses.');
+        }
+
+        // Batasi maksimal 10 soal per kuis
+        if ($quiz->questions()->count() >= 10) {
+            return redirect()->route('quiz.show', $quiz)
+                ->withError('Kuis ini sudah memiliki 10 soal (batas maksimum).');
         }
 
         $validate = $request->validate([
